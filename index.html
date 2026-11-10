@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1220">
+  <title>Blockchain Cloud Monitor</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark">BC</div>
+    <div>
+      <p class="eyebrow">CLOUD BLOCKCHAIN DEMO</p>
+      <h1>Blockchain Cloud Monitor</h1>
+    </div>
+    <span class="network-pill"><span class="pulse"></span> Demo network</span>
+  </header>
+
+  <main class="container">
+    <section class="intro">
+      <div>
+        <p class="eyebrow">ПАНЕЛЬ МОНИТОРИНГА</p>
+        <h2>Транзакции и целостность цепочки</h2>
+        <p class="muted">Учебная модель блокчейна с SHA-256, связью блоков и проверкой изменений.</p>
+      </div>
+      <button id="verifyBtn" class="button button-secondary" type="button">Проверить цепочку</button>
+    </section>
+
+    <section class="stats" aria-label="Статистика">
+      <article class="stat-card"><span>Всего транзакций</span><strong id="totalCount">0</strong></article>
+      <article class="stat-card"><span>Подтверждено</span><strong id="confirmedCount">0</strong></article>
+      <article class="stat-card"><span>Ожидает</span><strong id="pendingCount">0</strong></article>
+      <article class="stat-card"><span>Блоков в цепочке</span><strong id="blockCount">0</strong></article>
+    </section>
+
+    <section class="panel">
+      <div class="panel-heading">
+        <div><p class="eyebrow">НОВАЯ ОПЕРАЦИЯ</p><h3>Создать транзакцию</h3></div>
+        <span class="small-label">SHA-256</span>
+      </div>
+      <form id="transactionForm" class="transaction-form">
+        <label>Отправитель<input id="sender" name="sender" maxlength="40" placeholder="Например, Wallet-A" required></label>
+        <label>Получатель<input id="recipient" name="recipient" maxlength="40" placeholder="Например, Wallet-B" required></label>
+        <label>Сумма<input id="amount" name="amount" type="number" min="0.01" max="1000000000" step="0.01" placeholder="150.00" required></label>
+        <button class="button button-primary" type="submit">Добавить транзакцию</button>
+      </form>
+      <p class="hint">Транзакция добавляется в новый блок. Статус Pending автоматически меняется на Confirmed через несколько секунд.</p>
+    </section>
+
+    <section class="panel">
+      <div class="panel-heading">
+        <div><p class="eyebrow">LEDGER</p><h3>Список транзакций</h3></div>
+        <span id="lastUpdated" class="small-label">Обновление: —</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Блок</th><th>Отправитель</th><th>Получатель</th><th>Сумма</th><th>Хеш транзакции</th><th>Статус</th></tr></thead>
+          <tbody id="transactionRows"></tbody>
+        </table>
+      </div>
+      <div id="emptyState" class="empty-state" hidden>Транзакций пока нет.</div>
+    </section>
+
+    <section class="panel integrity-panel">
+      <div class="panel-heading">
+        <div><p class="eyebrow">SECURITY CHECK</p><h3>Состояние блокчейн-цепочки</h3></div>
+        <span id="chainStatus" class="status-badge status-neutral">Не проверено</span>
+      </div>
+      <p id="integrityMessage" class="muted">Нажмите «Проверить цепочку», чтобы пересчитать хеши и проверить связь блоков.</p>
+      <div class="chain-details">
+        <div><span>Последний хеш блока</span><code id="latestHash">—</code></div>
+        <div><span>Хеш предыдущего блока</span><code id="previousHash">—</code></div>
+      </div>
+      <div class="test-tools">
+        <button id="tamperBtn" class="button button-danger" type="button">Имитировать изменение данных</button>
+        <span class="hint">Кнопка изменяет сумму первой транзакции без пересчёта хеша — проверка должна выявить подмену.</span>
+      </div>
+    </section>
+
+    <footer>Blockchain Cloud Monitor · Учебный проект · Данные хранятся в браузере</footer>
+  </main>
+</body>
+</html>
